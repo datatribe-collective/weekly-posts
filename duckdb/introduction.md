@@ -1,4 +1,4 @@
-Getting Started with DuckDB in Python
+# Getting Started with DuckDB in Python
 
 DuckDB is an embedded, high-performance SQL database management system designed for analytical workloads. It integrates seamlessly with Python, allowing you to execute SQL queries directly within your Python environment.
 
