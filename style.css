@@ -1,0 +1,95 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* preferred font monserrat */
+body { 
+  font-family: 'Montserrat', sans-serif;
+}
+
+pre, code, .language-bash, .language-python {
+  background-color: #fdf6c1;
+  text-transform: none !important;
+  font-weight: normal !important;
+  font-size: 1rem;
+  font-family: monospace;
+  padding: 10pt;
+  border-radius: 4px;
+}
+
+
+pre code, code {
+  text-transform: none !important;
+  font-weight: normal !important;
+  padding: 0;
+  background-color: transparent;
+}
+
+/* for the text datatribe, league spartan preferred */
+header, footer { 
+  text-align: center; 
+  padding: 10px; 
+  background: #1b7182;
+  margin: 0 2rem;
+  text-transform: uppercase;
+  font-size: 1.2rem; 
+  font-family: 'League Spartan', sans-serif;
+  font-weight: bold;
+  text-align: center;
+}
+
+footer {
+  text-transform: none;
+  font-size: 1rem; 
+  font-weight: normal;
+  margin-top: auto;
+}
+
+main {
+  margin: 0 3rem;
+  text-align: left;
+  flex: 1;
+  font-size: 1rem;
+  padding: 5pt;
+  border-radius: 5pt;
+}
+
+.logo {  
+  background-image: url("./logo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 7rem;
+  height: 7rem;
+  display: block; 
+  margin: 0 auto;
+}
+
+/* span dominates styling for code blocks */
+span {
+  font-size: 1rem; 
+  text-align: center;
+  margin-top: 0;
+}
+
+.data {
+  color: white;
+}
+
+.tribe {
+  color: #fb5a01;
+}
+
+/* markdown headings #, ##, ###, etc */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  color: #1b7182;
+  font-size: 1.5rem; 
+  font-weight: bold;
+  text-align: center;
+  margin-top: 1rem;
+}
