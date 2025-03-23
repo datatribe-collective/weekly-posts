@@ -6,8 +6,10 @@ on:
       - main
 
 jobs:
-  dataribe-weekly-post-generator:
-    runs-on: ubuntu-latest
+  data-tribe-weekly-post-generator:
+    runs-on: ubuntu-latest 
+
+    container: debian:bookworm-slim 
 
     steps:
       - name: Checkout repository
@@ -15,19 +17,29 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y pandoc wkhtmltopdf
+          apt-get update
+          apt-get install -y --no-install-recommends pandoc wkhtmltopdf
 
-      - name: Convert Markdown to HTML with Template
+
+      - name: Find and Convert Markdown to HTML with Template
         run: |
-          pandoc README.md -o final.html --template=template.html --css=style.css --metadata title="..."
+            ROOT_DIR=$(pwd)
+            find . -type f -name "*.md" | while read -r md_file; do
+              folder=$(dirname "$md_file")
+              filename=$(basename "$md_file" .md)
+              html_file="${folder}/${filename}.html"
+              pdf_file="${folder}/${filename}.pdf"
+        
+              echo "Processing $md_file -> $html_file -> $pdf_file"
+        
+              pandoc "$md_file" -o "$html_file" --template="$ROOT_DIR/template.html" --css="$ROOT_DIR/style.css" --metadata title="$filename"
+        
+              wkhtmltopdf --enable-local-file-access "$html_file" "$pdf_file"
+            done
+        
 
-      - name: Convert HTML to PDF
-        run: |
-          wkhtmltopdf --enable-local-file-access final.html output.pdf
-
-      - name: Upload PDF as an artifact
+      - name: Upload PDFs as Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: final-pdf
-          path: output.pdf
+          name: markdown-pdfs
+          path: "**/*.pdf"
