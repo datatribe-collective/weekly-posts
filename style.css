@@ -1,0 +1,68 @@
+body { 
+    font-family: 'Arial'; }
+
+pre { 
+    background-color: #fdf6c1; 
+    padding: 10pt; 
+    border-radius: 4px; 
+}
+
+header, footer { 
+    text-align: center; 
+    padding: 10px; 
+    background: #1b7182;
+    margin: 0 2rem 0;
+    text-transform: uppercase;
+    font-size: 1.2rem; 
+    font-weight: bold;
+    text-align: center;
+    margin-top: 0;
+}
+
+footer {
+    text-transform: none;
+    font-size: 1rem; 
+    font-weight: normal;
+}
+
+main {
+    margin: 0 3rem 0;
+    text-align: left;
+}
+
+.logo {  
+    background-image: url("./logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 7rem;
+    height: 7rem;
+    display: block; 
+    margin: 0 auto 0; 
+}
+
+
+span {
+    text-transform: uppercase;
+    font-size: 1.2rem; 
+    font-weight: bold;
+    text-align: center;
+    margin-top: 0;
+}
+
+.data {
+    color: white;
+}
+
+.tribe {
+    color: #fb5a01;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+    color: #1b7182;
+    font-size: 1.2rem; 
+    font-weight: bold;
+    text-align: center;
+    margin-top: 1rem;
+}
