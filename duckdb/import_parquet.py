@@ -26,7 +26,8 @@ query1 = con.execute("""
 """).df()
 
 st.subheader("Total Revenue per Product")
-st.bar_chart(query1.set_index("product_name"))
+#st.bar_chart(query1.set_index("product_name"))
+st.bar_chart(query1.set_index("product_name"), height=200, use_container_width=True)
 
 # Best-Selling Product
 query2 = con.execute("""
