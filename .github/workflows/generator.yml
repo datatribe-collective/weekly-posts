@@ -1,45 +1,42 @@
-name: DataTribe Weekly Post Generator
-
+name: DataTribe's Weekly Post Convertor
 on:
   push:
     branches:
-      - main
+      - main  
 
 jobs:
-  data-tribe-weekly-post-generator:
-    runs-on: ubuntu-latest 
-
-    container: debian:bookworm-slim 
-
+  build:
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Install dependencies
         run: |
-          apt-get update
-          apt-get install -y --no-install-recommends pandoc wkhtmltopdf
+          sudo apt-get update
+          sudo apt-get install -y libgbm-dev
 
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-      - name: Find and Convert Markdown to HTML with Template
+      - name: Install md-to-pdf
+        run: npm install -g md-to-pdf
+
+      - name: Convert Markdown to PDF
         run: |
-            ROOT_DIR=$(pwd)
-            find . -type f -name "*.md" | while read -r md_file; do
-              folder=$(dirname "$md_file")
-              filename=$(basename "$md_file" .md)
-              html_file="${folder}/${filename}.html"
-              pdf_file="${folder}/${filename}.pdf"
-        
-              echo "Processing $md_file -> $html_file -> $pdf_file"
-        
-              pandoc "$md_file" -o "$html_file" --template="$ROOT_DIR/template.html" --css="$ROOT_DIR/style.css" --metadata title="$filename"
-        
-              wkhtmltopdf --enable-local-file-access "$html_file" "$pdf_file"
-            done
-        
+          shopt -s globstar  # Enable recursive globbing (for Bash)
+          for md_file in **/*.md; do
+            [ -f "$md_file" ] || continue  # Skip if no files found
+            pdf_file="${md_file%.md}.pdf"
+            
+            echo "Converting files..."
+            md-to-pdf "$md_file" --config-file ./config.js
+          done
 
-      - name: Upload PDFs as Artifacts
+      - name: Upload PDF as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: markdown-pdfs
-          path: "**/*.pdf"
+          name: pdfs
+          path: "./**/*.pdf"
