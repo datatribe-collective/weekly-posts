@@ -65,7 +65,9 @@ module.exports = {
         </style>
         <section>
             <span style='font-size: 9pt; text-transform: none; height: 40px; text-align: center; align-items: center;'>
+
                 PDF generated on: ${new Date().toLocaleDateString('fi-FI')}</span>
+
         </section>
         `,
     },
