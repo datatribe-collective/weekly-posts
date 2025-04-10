@@ -1,0 +1,27 @@
+# Github Actions workflow file. Uses Docker Container.
+
+name: DataTribe's Weekly Post Convertor (Docker)
+
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Build Docker Image
+        run: docker build -t wp-convert -f ver2_conversion/Dockerfile .
+
+      - name: Run Container & Generate PDFs
+        run: docker run --rm -v ${{ github.workspace }}:/app wp-convert
+
+      - name: Upload PDFs as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pdfs
+          path: "**/*.pdf"
