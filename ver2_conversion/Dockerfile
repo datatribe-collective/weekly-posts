@@ -1,29 +1,31 @@
-FROM node:20
+# Slimmer base image.
+FROM node:20-slim  
 
-WORKDIR /app
+WORKDIR /app  
 
-# Install dependencies required for Puppeteer and md-to-pdf
-RUN apt-get update && apt-get install -y \
-  libgbm-dev \
+# Install necessary depencies.
+RUN apt-get update && apt-get install -y --no-install-recommends \
   libnss3 \
   libxss1 \
   libatk-bridge2.0-0 \
   libgtk-3-0 \
   libasound2 \
   libgbm1 \
-  libnss3-dev \
   fonts-liberation \
   libappindicator3-1 \
   libxtst6 \
   xdg-utils \
   ca-certificates \
-  && apt-get clean
+  && rm -rf /var/lib/apt/lists/*  
 
-# Install md-to-pdf globally
-RUN npm install -g md-to-pdf
+# Install md-to-pdf.
+RUN npm install -g md-to-pdf  
 
-# Copy the entire repository into the container
-COPY . /app
+# Copy ONLY necessary files first: Optimized use of cache.
+COPY convert/config.js /app/ver2_conversion/config.js  
 
-# Ensure the correct path for config.js in the CMD
+# Copy rest of the files.
+COPY . /app  
+
+# Run conversion with Puppeteer flags.
 CMD ["sh", "-c", "for md_file in **/*.md; do [ -f \"$md_file\" ] || continue; pdf_file=\"${md_file%.md}.pdf\"; md-to-pdf \"$md_file\" --config-file /app/ver2_conversion/config.js --launch-options '{\"args\": [\"--no-sandbox\", \"--disable-setuid-sandbox\"]}'; done"]
