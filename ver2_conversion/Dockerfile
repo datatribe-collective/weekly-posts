@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN npm install -g md-to-pdf  
 
 # Copy ONLY necessary files first: Optimized use of cache.
-COPY convert/config.js /app/ver2_conversion/config.js  
+COPY ver2_conversion/config.js /app/ver2_conversion/config.js  
 
 # Copy rest of the files.
 COPY . /app  
