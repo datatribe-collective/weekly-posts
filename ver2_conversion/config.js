@@ -1,11 +1,11 @@
 const fs = require('fs');
 
-const logoBase64 = fs.readFileSync('./logo.svg', { encoding: 'base64' });
+const logoBase64 = fs.readFileSync('./ver2_conversion/logo.svg', { encoding: 'base64' });
 const logoDataUrl = `data:image/svg+xml;base64,${logoBase64}`;
 
 
 module.exports = {
-    stylesheet: ['./layout.css'],
+    stylesheet: ['./ver2_conversion/layout.css'],
     marked_options: {
         headerIds: true,
         smartypants: true,
@@ -65,7 +65,9 @@ module.exports = {
         </style>
         <section>
             <span style='font-size: 9pt; text-transform: none; height: 40px; text-align: center; align-items: center;'>
-                PDF generated on: ${new Date().toLocaleDateString()}</span>
+
+                PDF generated on: ${new Date().toLocaleDateString('fi-FI')}</span>
+
         </section>
         `,
     },
